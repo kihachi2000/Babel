@@ -1,0 +1,12 @@
+.app {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 8fr 5fr;
+}
+
+.timer {
+}
+
+.tower {
+    border-left: solid 1px #aaa;
+}
