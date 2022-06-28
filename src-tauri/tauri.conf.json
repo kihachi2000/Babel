@@ -55,11 +55,11 @@
     },
     "windows": [
       {
-        "fullscreen": false,
-        "height": 600,
-        "resizable": true,
         "title": "Babel",
-        "width": 800
+        "fullscreen": false,
+        "resizable": true,
+        "width": 640,
+        "height": 440
       }
     ]
   }

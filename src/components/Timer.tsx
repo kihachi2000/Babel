@@ -22,6 +22,20 @@ const Timer: Component = () => {
         invoke<{next: boolean, remain: number}>("timer_update").then(data => {
             console.log(data);
             setRemain(data.remain);
+
+            if (data.next) {
+                // ストップ
+                setState("Stopping");
+                clearInterval(interval!);
+                interval = null;
+                invoke("timer_stop");
+
+                // 効果音
+                const music = new Audio("/end.mp3");
+                music.volume = 0.3;
+                music.muted = false;
+                music.play();
+            }
         });
     }
 
