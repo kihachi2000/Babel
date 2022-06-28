@@ -1,7 +1,8 @@
 use std::fs::File;
 use std::io::{BufReader, BufWriter, Write};
 
-use serde_json::{to_string, from_reader};
+use serde::Serialize;
+use serde_json::from_reader;
 
 use crate::types::daily_data::DailyData;
 
@@ -17,7 +18,12 @@ impl JsonManager {
     }
 
     pub fn write_file(&self, data: &Vec<DailyData>) {
-        let data_str = to_string(data).expect("Failed to serialize");
+        let buf = Vec::new();
+        let formatter = serde_json::ser::PrettyFormatter::with_indent(b"    ");
+        let mut ser = serde_json::Serializer::with_formatter(buf, formatter);
+        data.serialize(&mut ser).expect("Failed to serialize");
+
+        let data_str = String::from_utf8(ser.into_inner()).expect("Failed to cast into String");
 
         let file = File::create(&self.file_path).expect("Failed to open file");
 
