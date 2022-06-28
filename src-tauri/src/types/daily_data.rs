@@ -4,14 +4,14 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct DailyData {
     date: NaiveDate,
-    blocks: usize,
+    bricks: usize,
 }
 
 impl DailyData {
     pub fn new() -> Self {
         Self {
             date: Local::today().naive_local(),
-            blocks: 1,
+            bricks: 1,
         }
     }
 
@@ -19,7 +19,11 @@ impl DailyData {
         &self.date
     }
 
+    pub fn get_bricks(&self) -> usize {
+        self.bricks
+    }
+
     pub fn add_brick(&mut self) {
-        self.blocks += 1;
+        self.bricks += 1;
     }
 }

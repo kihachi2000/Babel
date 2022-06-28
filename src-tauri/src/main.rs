@@ -24,6 +24,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             commands::get_data,
             commands::add_brick,
+            commands::timer_sync,
             commands::timer_update,
             commands::timer_stop,
         ])

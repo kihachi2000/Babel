@@ -19,6 +19,10 @@ impl TimerManager {
         }
     }
 
+    pub fn sync(&self) -> i64 {
+        self.remain.lock().unwrap().num_seconds()
+    }
+
     pub fn update(&self) -> TimerData {
         let mut remain = self.remain.lock().unwrap();
         let mut update = self.last_update.lock().unwrap();
@@ -38,10 +42,10 @@ impl TimerManager {
         *update = Some(now);
         if zero < new_remain {
             *remain = new_remain;
-            TimerData::Continue(new_remain.num_seconds())
+            TimerData::c(new_remain.num_seconds())
         } else {
             *remain = Duration::seconds(self.interval);
-            TimerData::Next(self.interval)
+            TimerData::n(self.interval)
         }
     }
 

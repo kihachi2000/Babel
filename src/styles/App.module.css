@@ -5,8 +5,16 @@
 }
 
 .timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .tower {
+    min-height: 100vh;
     border-left: solid 1px #aaa;
+    padding: 0 24%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }

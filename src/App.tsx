@@ -1,5 +1,8 @@
 import type { Component } from 'solid-js';
 
+import Timer from './components/Timer';
+import Tower from "./components/Tower";
+
 import "./styles/globals.css";
 import css from './styles/App.module.css';
 
@@ -17,12 +20,6 @@ const App: Component = () => {
         invoke("add_brick");
     }
 
-    function timer_update() {
-        invoke("timer_update").then(data => {
-            console.log(data);
-        });
-    }
-
     function timer_stop() {
         invoke("timer_stop");
     }
@@ -30,8 +27,10 @@ const App: Component = () => {
     return (
         <div class={css.app}>
             <div class={css.timer}>
+                <Timer />
             </div>
             <div class={css.tower}>
+                <Tower />
             </div>
         </div>
     );
