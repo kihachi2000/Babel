@@ -1,4 +1,4 @@
-import {Component, createSignal, onCleanup} from "solid-js";
+import {Component, createSignal, onCleanup, For, Show} from "solid-js";
 
 import {invoke} from "@tauri-apps/api/tauri";
 
@@ -20,25 +20,33 @@ const Tower: Component = () => {
     const interval = setInterval(get_data, 60000);
 
     function tower_grid() {
+        const data_len = data().length;
 
         return (
-            <>
-                {
-                    data().map((step) => (
-                        <div class={css.grid}>
-                            {
-                                step.map(({date, color_num}) => (
-                                    <div
-                                        class={css.brick}
-                                        title={date}
-                                        style={{"background-color": colors[color_num % colors.length]}}
-                                    ></div>
-                                ))
-                            }
-                        </div>
-                    ))
-                }
-            </>
+            <div>
+                <For each={data()}>
+                    {(step, index) => (
+                        <>
+                            <Show when={(data_len - index()) % 4 === 0}>
+                                <div class={css.line}>
+                                    <p class={css.line_num}>{(data_len - index()) * 5}</p>
+                                </div>
+                            </Show>
+                            <div class={css.grid}>
+                                <For each={step}>
+                                    {({date, color_num}) => (
+                                        <div 
+                                            class={css.brick}
+                                            title={date}
+                                            style={{"background-color": colors[color_num % colors.length]}}
+                                        ></div>
+                                    )}
+                                </For>
+                            </div>
+                        </>
+                    )}
+                </For>
+            </div>
         );
     }
 
@@ -47,9 +55,7 @@ const Tower: Component = () => {
     return (
         <>
             <div class={css.count_label}>{data().reduce((acc, x) => acc + x.length, 0)}</div>
-            <div>
-                {tower_grid()}
-            </div>
+            {tower_grid()}
         </>
     );
 }

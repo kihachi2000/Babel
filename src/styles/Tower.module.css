@@ -20,3 +20,20 @@
     border-radius: 20%;
     background-color: #8888ff;
 }
+
+.line {
+    position: relative;
+    width: calc(100% + 4px);
+    height: 0;
+    margin: 5px -2px;
+    border-bottom: solid 2px #ddd;
+}
+
+.line_num {
+    color: #c8c8c8;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(calc(100% + 4px), -50%);
+    user-select: none;
+}
