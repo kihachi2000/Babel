@@ -35,5 +35,4 @@
     top: 0;
     right: 0;
     transform: translate(calc(100% + 4px), -50%);
-    user-select: none;
 }
