@@ -14,7 +14,7 @@
     min-height: 100vh;
     border-left: solid 1px #aaa;
     padding: 0 24%;
-    overflow-y: auto;
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

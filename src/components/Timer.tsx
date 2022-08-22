@@ -2,7 +2,8 @@ import {Component, createSignal, Switch, Match} from "solid-js";
 
 import {invoke} from "@tauri-apps/api/tauri";
 
-import {SVGStart, SVGStop} from "../components/SVG";
+import {repeat, setRepeat} from "../components/Config";
+import {SVGRepeat, SVGStart, SVGStop} from "../components/SVG";
 
 import css from "../styles/Timer.module.css";
 
@@ -24,17 +25,20 @@ const Timer: Component = () => {
             setRemain(data.remain);
 
             if (data.next) {
-                // ストップ
-                setState("Stopping");
-                clearInterval(interval!);
-                interval = null;
-                invoke("timer_stop");
-
                 // 効果音
-                const music = new Audio("/end.mp3");
-                music.volume = 0.3;
-                music.muted = false;
-                music.play();
+                const sound = new Audio("/end.mp3");
+                sound.volume = 0.3;
+                sound.muted = false;
+                sound.play();
+
+                if (repeat() === false) {
+                    // ストップ
+                    setState("Stopping");
+                    clearInterval(interval!);
+                    interval = null;
+                    invoke("timer_stop");
+                    console.log("ストップ");
+                }
             }
         });
     }
@@ -64,14 +68,27 @@ const Timer: Component = () => {
         <div class={css.wrapper}>
             {remain_label()}
 
-            <Switch>
-                <Match when={state() === "Running"}>
-                    {SVGStop(css.stop, onClickHandler)}
-                </Match>
-                <Match when={state() === "Stopping"}>
-                    {SVGStart(css.start, onClickHandler)}
-                </Match>
-            </Switch>
+            <div class={css.button_area}>
+                <div class={css.dummy}></div>
+
+                <Switch>
+                    <Match when={state() === "Running"}>
+                        {SVGStop(css.stop, onClickHandler)}
+                    </Match>
+                    <Match when={state() === "Stopping"}>
+                        {SVGStart(css.start, onClickHandler)}
+                    </Match>
+                </Switch>
+
+                <Switch>
+                    <Match when={repeat() === true}>
+                        {SVGRepeat(css.repeat_on, () => setRepeat(false))}
+                    </Match>
+                    <Match when={repeat() === false}>
+                        {SVGRepeat(css.repeat_off, () => setRepeat(true))}
+                    </Match>
+                </Switch>
+            </div>
         </div>
     );
 }
