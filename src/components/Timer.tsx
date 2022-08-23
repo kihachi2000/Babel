@@ -2,8 +2,8 @@ import {Component, createSignal, Switch, Match} from "solid-js";
 
 import {invoke} from "@tauri-apps/api/tauri";
 
-import {repeat, setRepeat} from "../components/Config";
-import {SVGRepeat, SVGStart, SVGStop} from "../components/SVG";
+import {repeat, setRepeat, speak, setSpeak} from "../components/Config";
+import {SVGMuted, SVGRepeat, SVGSpeak, SVGStart, SVGStop} from "../components/SVG";
 
 import css from "../styles/Timer.module.css";
 
@@ -28,7 +28,7 @@ const Timer: Component = () => {
                 // 効果音
                 const sound = new Audio("/end.mp3");
                 sound.volume = 0.3;
-                sound.muted = false;
+                sound.muted = speak() == false;
                 sound.play();
 
                 if (repeat() === false) {
@@ -69,7 +69,18 @@ const Timer: Component = () => {
             {remain_label()}
 
             <div class={css.button_area}>
-                <div class={css.dummy}></div>
+                <Switch>
+                    <Match when={speak() === true}>
+                        <div class={css.speak_button} onClick={() => setSpeak(false)}>
+                            {SVGSpeak(css.speak_icon)}
+                        </div>
+                    </Match>
+                    <Match when={speak() === false}>
+                        <div class={css.muted_button} onClick={() => setSpeak(true)}>
+                            {SVGMuted(css.muted_icon)}
+                        </div>
+                    </Match>
+                </Switch>
 
                 <Switch>
                     <Match when={state() === "Running"}>

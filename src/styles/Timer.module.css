@@ -41,6 +41,40 @@
     height: 28px;
 }
 
+.speak_button {
+    width: 28px;
+    height: 28px;
+    background-color: #a0a0a0;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.speak_icon {
+    width: 16px;
+    height: 16px;
+    fill: #ffffff;
+}
+
+.muted_button {
+    width: 28px;
+    height: 28px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.muted_icon {
+    width: 16px;
+    height: 16px;
+    fill: #ffffff;
+}
+
 .repeat_on {
     width: 28px;
     height: 28px;
