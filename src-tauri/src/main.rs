@@ -7,13 +7,18 @@ mod commands;
 mod managers;
 mod types;
 
+use std::fs::create_dir_all;
 use dirs::home_dir;
-
 use managers::{DataManager, TimerManager};
 
 fn main() {
     let mut path = home_dir().unwrap();
     path.push(".babel");
+
+    if !path.exists() {
+        create_dir_all(path.clone()).expect("error while creating directory");
+    }
+
     path.push("data.json");
     let path_string = String::from(path.to_str().unwrap());
 
